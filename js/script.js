@@ -21,6 +21,7 @@ class Component {
 function updateGameArea() {
     myGameArea.clear();
     myPedrito.draw(ctx);
+    myClicker.draw(ctx);
 }
 
 function startGame(){
@@ -54,11 +55,14 @@ document.getElementById("start-button").onclick = () => {
 const pedritoImage = new Image();
 pedritoImage.src = "images/pedrito.png";
 
-const obstacleImage = new Image();
-obstacleImage.src = "images/pedrito.png";
+const obstacleClickerImage = new Image();
+obstacleClickerImage.src = "images/clicker.png";
 
 const myPedrito = new Component(0, 250, 180, 100, pedritoImage); //PLAYER
 myPedrito.draw(ctx);
+
+const myClicker = new Component(550, 400, 80, 80, obstacleClickerImage); //OBSTACLE
+myClicker.draw(ctx);
 
 
 const myGameArea = {
