@@ -29,20 +29,21 @@ function startGame(){
 
 //--------Event Listeners-------
 document.addEventListener("keydown", (event) => {
+    console.log(event.key);
     //37 and 39 are key codes that correspond to the ASCII codes for left and right position
-    if (event.keyCode === 37) {
+    if (event.key === "ArrowLeft") {
       // left arrow
       myPedrito.x -= 10; // move Pedrito 10 pixels left
-    } else if (event.keyCode === 39) {
+    } else if (event.key === "ArrowRight") {
       // right arrow
       myPedrito.x += 10; // move Pedrito 10 pixels right
-    } else if (event.keyCode === 38) {
+    } else if (event.key === "ArrowUp") {
         // right arrow
         myPedrito.y -= 10; // move Pedrito 10 pixels up
-    } else if (event.keyCode === 40) {
+    } else if (event.key === "ArrowDown") {
         // right arrow
         myPedrito.y += 10; // move Pedrito 10 pixels down
-    }
+    } //else if (event barra de espacio....)
 });
 document.getElementById("start-button").onclick = () => {
     startGame();
@@ -53,8 +54,12 @@ document.getElementById("start-button").onclick = () => {
 const pedritoImage = new Image();
 pedritoImage.src = "images/pedrito.png";
 
-const myPedrito = new Component(0, 0, 180, 100, pedritoImage); //PLAYER
+const obstacleImage = new Image();
+obstacleImage.src = "images/pedrito.png";
+
+const myPedrito = new Component(0, 250, 180, 100, pedritoImage); //PLAYER
 myPedrito.draw(ctx);
+
 
 const myGameArea = {
     canvas: document.getElementById("canvas"),
