@@ -86,11 +86,8 @@ pedritoImage.src = "images/pedrito.png";
 const myPedrito = new Component(0, 250, 180, 100, pedritoImage); //PLAYER
 myPedrito.draw(ctx);
 
-
 const obstacleClickerImage = new Image();
 obstacleClickerImage.src = "images/clicker.png";
-
-
 
 const myObstacles = []; //array to store all obstacles
 
