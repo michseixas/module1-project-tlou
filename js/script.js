@@ -48,8 +48,10 @@ document.addEventListener("keydown", (event) => {
 });
 document.getElementById("start-button").onclick = () => {
     startGame();
+    let bannerelements = document.getElementsByClassName("banner")
+    console.log(bannerelements);
+    bannerelements[0].remove();
 };
-
 //-----------General Scope-------------
 
 const pedritoImage = new Image();
