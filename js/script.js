@@ -35,7 +35,7 @@ function updateObstacles() {
   }
 
   myGameArea.frames += 1;
-  
+
 
   if (myGameArea.frames % 200 === 0) { 
     //when this loop reaches 120 frames, it creates a new object, who has a random y coordinate and pushes the object into the array myObstacles.
@@ -47,11 +47,15 @@ function updateObstacles() {
       // this new component has the x and y we just calculated above
       // and has the image of a clicker
       myObstacles.push(new Component(x, y, 80, 80, obstacleClickerImage));
+      
   } //this x and y are the ones defined in this scope!! :)
   
-
+  if (myGameArea.frames % 200 === 0) { 
+      let x = myGameArea.canvas.width;
+      let y = Math.floor(Math.random() * 200);
+      myObstacles.push(new Component(x, y, 50, 70, obstaclePambazo));
+  }
 }
-
 //--------Event Listeners-------
 document.addEventListener("keydown", (event) => {
     console.log(event.key);
@@ -68,14 +72,15 @@ document.addEventListener("keydown", (event) => {
     } else if (event.key === " ") {
       //else if (event barra de espacio....)
     }
-});
-
-document.getElementById("start-button").onclick = () => { //this is what sets the start button and erases the banner once the start button is clicked
+})
+  document.getElementById("start-button").onclick = () => { //this is what sets the start button and erases the banner once the start button is clicked
+    console.log("startbuttonclickworks");
     startGame();
-    let bannerelements = document.getElementsByClassName("banner")
+    let bannerelements = document.getElementsByClassName("banner");
     console.log(bannerelements);
     bannerelements[0].remove();
-};
+}
+
 
 
 //-----------General Scope-------------
@@ -88,6 +93,9 @@ myPedrito.draw(ctx);
 
 const obstacleClickerImage = new Image();
 obstacleClickerImage.src = "images/clicker.png";
+
+const obstaclePambazo = new Image ();
+obstaclePambazo.src = "../images/Pambazo.png";
 
 const myObstacles = []; //array to store all obstacles
 
@@ -105,6 +113,3 @@ const myGameArea = { //this is the object myGameArea. It has properties related 
       clearInterval(this.interval);
     },
   }; 
-
-
-  
