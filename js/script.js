@@ -53,7 +53,7 @@ function updateObstacles() {
   if (myGameArea.frames % 200 === 0) { 
       let x = myGameArea.canvas.width;
       let y = Math.floor(Math.random() * 200);
-      myObstacles.push(new Component(x, y, 50, 70, obstaclePambazo));
+      myObstacles.push(new Component(x, y, 40, 70, obstaclePambazo));
   }
 }
 //--------Event Listeners-------
