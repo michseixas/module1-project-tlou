@@ -9,43 +9,79 @@ class Component {
       this.width = w;
       this.height = h;
       this.imgElement = imgElement;
+    
     }
 
     draw() {
         //ctx is the canvas context used for drawing an image file (ex: .jpeg, .png)
         ctx.drawImage(this.imgElement, this.x, this.y, this.width, this.height);
     }
+
 }
 
 class Pedrito extends Component {
   constructor(x, y, w, h, imgElement){
     super(x, y, w, h, imgElement)
-    this.speed = 10
+    this.speedX = 0;
+    this.speedY = 0;
   }
   
    //metodos
+  
    update(){
     //behavior of mypedrito poner flechas y luego llamar funcion
-    document.addEventListener("keydown", (event) => {
-    console.log(event.key);
-    if (event.key === "ArrowLeft" && this.x > 0) {
-      this.x -= this.speed; // moves this this.speed pixels left
-    } else if (event.key === "ArrowRight" && this.x < 550) {
-      this.x += this.speed; // moves this this.speed pixels right
-    } else if (event.key === "ArrowUp" && this.y > 0 ) {
-        this.y -= this.speed; // moves this this.speed pixels up
-    } else if (event.key === "ArrowDown" && this.y < 400 ) {
-        this.y += this.speed; // moves Pedrito Pedrito.speed pixels down
-    } else if (event.key === "z") {
-      myGameArea.stop(); //stops the game loop when "Z" is pressed - right now it's functioning as "stop", I would like it to "pause".
-    } else if (event.key === " ") {
-      //else if (event barra de espacio....)
-      // if you press key = space then call the function shoot()
-    }
-});
+    // document.addEventListener("keydown", (event) => {
+    // console.log(event.key);
+    //  switch(event.key){
+    //   case (event.key === "ArrowLeft" && this.x > 0):
+    //     this.speedX -= 1 // moves this this.speed pixels left
+    //     break;
+    //     case (event.key === "ArrowRight" && this.x < 550):
+    //     this.speedX += 1 ; // moves this this.speed pixels left
+    //     break;
+    //     case (event.key === "ArrowUp" && this.y > 0):
+    //     this.speedY -= 1; // moves this this.speed pixels left
+    //     break;
+    //     case (event.key === "ArrowDown" && this.y < 400):
+    //     this.speedY += 1; // moves this this.speed pixels left
+    //     break;
+    //     case (event.key === "z"):
+    //     myGameArea.stop(); //stops the game loop when "Z" is pressed - right now it's functioning as "stop", I would like it to "pause".
+    //     break;
+    //     // case " ": para shoot() 
+    //  }
+    
+    //  document.addEventListener('keyup', (event) => {
+    //   this.speed = 0;
+    //   // this.y = 0;
+    //  });
 
 
-   }
+
+    // if (event.key === "ArrowLeft" && this.x > 0) {
+    //   this.x -= 1; // moves this this.speed pixels left
+    // } else if (event.key === "ArrowRight" && this.x < 550) {
+    //   this.x += 1; // moves this this.speed pixels right
+    // } else if (event.key === "ArrowUp" && this.y > 0 ) {
+    //     this.y -= 1; // moves this this.speed pixels up
+    // } else if (event.key === "ArrowDown" && this.y < 400 ) {
+    //     this.y += 1; // moves Pedrito Pedrito.speed pixels down
+    // } else if (event.key === "z") {
+    //   myGameArea.stop(); //stops the game loop when "Z" is pressed - right now it's functioning as "stop", I would like it to "pause".
+    // } else if (event.key === " ") {
+    //   //else if (event barra de espacio....)
+    //   // if you press key = space then call the function shoot()
+    // }
+}
+
+
+  
+
+   newPos(){
+    this.x += this.speedX;
+    this.y += this.speedY;
+  }
+  
    shoot(){
     //dispara balas
    }
@@ -72,8 +108,9 @@ class Clicker extends Component{
 function updateGameArea() {
     myGameArea.clear();
     mypedrito.draw(ctx);
+    mypedrito.newPos();
     mypedrito.update();
-    console.log("mypedrito:", mypedrito);
+    // console.log("mypedrito:", mypedrito);
     updateObstacles();
 }
 
@@ -106,29 +143,44 @@ function updateObstacles() {
 }
 
 //--------Event Listeners-------
-// document.addEventListener("keydown", (event) => {
-//     console.log(event.key);
-//     if (event.key === "ArrowLeft" && myPedrito.x > 0) {
-//       myPedrito.x -= 10; // moves Pedrito 10 pixels left
-//     } else if (event.key === "ArrowRight" && myPedrito.x < 550) {
-//       myPedrito.x += 10; // moves Pedrito 10 pixels right
-//     } else if (event.key === "ArrowUp" && myPedrito.y > 0 ) {
-//         myPedrito.y -= 10; // moves Pedrito 10 pixels up
-//     } else if (event.key === "ArrowDown" && myPedrito.y < 400 ) {
-//         myPedrito.y += 10; // moves Pedrito 10 pixels down
-//     } else if (event.key === "z") {
-//       myGameArea.stop(); //stops the game loop when "Z" is pressed - right now it's functioning as "stop", I would like it to "pause".
-//     } else if (event.key === " ") {
-//       //else if (event barra de espacio....)
-//     }
-// });
+document.addEventListener("keydown", (event) => {
+  // console.log('command key',event.key);
+   switch(true){
+    case (event.key === "ArrowLeft" && mypedrito.x > 0):
+      console.log("arrowleft")
+      mypedrito.speedX -= 0.5 // moves mypedrito mypedrito.speed pixels left
+      break;
+      case (event.key === "ArrowRight" && mypedrito.x < 550):
+      console.log("arrowright")
+      mypedrito.speedX += 0.5 ; // moves mypedrito mypedrito.speed pixels left
+      break;
+      case (event.key === "ArrowUp" && mypedrito.y > 0):
+      console.log("arrowup")
+      mypedrito.speedY -= 0.5; // moves mypedrito mypedrito.speed pixels left
+      break;
+      case (event.key === "ArrowDown" && mypedrito.y < 400):
+      console.log("arrowdown")
+      mypedrito.speedY += 0.5; // moves this this.speed pixels left
+      break;
+      case (event.key === "z"):
+      myGameArea.stop(); //stops the game loop when "Z" is pressed - right now it's functioning as "stop", I would like it to "pause".
+      break;
+      // case " ": para shoot() 
+   }})
+  
+   document.addEventListener('keyup', (event) => {
+      // console.log("keyup")
+      mypedrito.speedX = 0;
+    mypedrito.speedY = 0;
+    // this.y = 0;
+   });
 
-document.getElementById("start-button").onclick = () => { //this is what sets the start button and erases the banner once the start button is clicked
+  document.getElementById("start-button").onclick = () => { //this is what sets the start button and erases the banner once the start button is clicked
     startGame();
     let bannerelements = document.getElementsByClassName("banner")
     console.log(bannerelements);
     bannerelements[0].remove();
-};
+   };
 
 
 //-----------General Scope-------------
