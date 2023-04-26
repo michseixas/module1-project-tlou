@@ -37,8 +37,8 @@ function updateObstacles() {
   myGameArea.frames += 1;
   
 
-  if (myGameArea.frames % 200 === 0) { 
-    //when this loop reaches 120 frames, it creates a new object, who has a random y coordinate and pushes the object into the array myObstacles.
+  if (myGameArea.frames % 200 === 0) { //This count will be used to count the score as frames pass
+    //when this loop reaches 420 frames, it creates a new object, who has a random y coordinate and pushes the object into the array myObstacles.
       // x is the total width of the canvas 
       let x = myGameArea.canvas.width;
       // y is a random number between 0 and 420
