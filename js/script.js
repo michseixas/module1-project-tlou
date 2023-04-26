@@ -17,10 +17,63 @@ class Component {
     }
 }
 
+class Pedrito extends Component {
+  constructor(x, y, w, h, imgElement){
+    super(x, y, w, h, imgElement)
+    this.speed = 10
+  }
+  
+   //metodos
+   update(){
+    //behavior of mypedrito poner flechas y luego llamar funcion
+    document.addEventListener("keydown", (event) => {
+    console.log(event.key);
+    if (event.key === "ArrowLeft" && this.x > 0) {
+      this.x -= this.speed; // moves this this.speed pixels left
+    } else if (event.key === "ArrowRight" && this.x < 550) {
+      this.x += this.speed; // moves this this.speed pixels right
+    } else if (event.key === "ArrowUp" && this.y > 0 ) {
+        this.y -= this.speed; // moves this this.speed pixels up
+    } else if (event.key === "ArrowDown" && this.y < 400 ) {
+        this.y += this.speed; // moves Pedrito Pedrito.speed pixels down
+    } else if (event.key === "z") {
+      myGameArea.stop(); //stops the game loop when "Z" is pressed - right now it's functioning as "stop", I would like it to "pause".
+    } else if (event.key === " ") {
+      //else if (event barra de espacio....)
+      // if you press key = space then call the function shoot()
+    }
+});
+
+
+   }
+   shoot(){
+    //dispara balas
+   }
+   collectBocatas(){
+    //
+   }
+
+  mypedritoDies(){
+    //puede que vaya dentro de update
+  }
+}
+
+// const mypedrito = new Pedrito(0, 250, 180, 100, mypedritoImage); //PLAYER
+// mypedrito.draw(ctx);
+
+class Clicker extends Component{
+   update(){
+   //behavior of clicker
+   }
+  
+}
+
 // -------My Functions----------------
 function updateGameArea() {
     myGameArea.clear();
-    myPedrito.draw(ctx);
+    mypedrito.draw(ctx);
+    mypedrito.update();
+    console.log("mypedrito:", mypedrito);
     updateObstacles();
 }
 
@@ -53,22 +106,22 @@ function updateObstacles() {
 }
 
 //--------Event Listeners-------
-document.addEventListener("keydown", (event) => {
-    console.log(event.key);
-    if (event.key === "ArrowLeft" && myPedrito.x > 0) {
-      myPedrito.x -= 10; // moves Pedrito 10 pixels left
-    } else if (event.key === "ArrowRight" && myPedrito.x < 550) {
-      myPedrito.x += 10; // moves Pedrito 10 pixels right
-    } else if (event.key === "ArrowUp" && myPedrito.y > 0 ) {
-        myPedrito.y -= 10; // moves Pedrito 10 pixels up
-    } else if (event.key === "ArrowDown" && myPedrito.y < 400 ) {
-        myPedrito.y += 10; // moves Pedrito 10 pixels down
-    } else if (event.key === "z") {
-      myGameArea.stop(); //stops the game loop when "Z" is pressed - right now it's functioning as "stop", I would like it to "pause".
-    } else if (event.key === " ") {
-      //else if (event barra de espacio....)
-    }
-});
+// document.addEventListener("keydown", (event) => {
+//     console.log(event.key);
+//     if (event.key === "ArrowLeft" && myPedrito.x > 0) {
+//       myPedrito.x -= 10; // moves Pedrito 10 pixels left
+//     } else if (event.key === "ArrowRight" && myPedrito.x < 550) {
+//       myPedrito.x += 10; // moves Pedrito 10 pixels right
+//     } else if (event.key === "ArrowUp" && myPedrito.y > 0 ) {
+//         myPedrito.y -= 10; // moves Pedrito 10 pixels up
+//     } else if (event.key === "ArrowDown" && myPedrito.y < 400 ) {
+//         myPedrito.y += 10; // moves Pedrito 10 pixels down
+//     } else if (event.key === "z") {
+//       myGameArea.stop(); //stops the game loop when "Z" is pressed - right now it's functioning as "stop", I would like it to "pause".
+//     } else if (event.key === " ") {
+//       //else if (event barra de espacio....)
+//     }
+// });
 
 document.getElementById("start-button").onclick = () => { //this is what sets the start button and erases the banner once the start button is clicked
     startGame();
@@ -80,11 +133,11 @@ document.getElementById("start-button").onclick = () => { //this is what sets th
 
 //-----------General Scope-------------
 
-const pedritoImage = new Image();
-pedritoImage.src = "images/pedrito.png";
+const mypedritoImage = new Image();
+mypedritoImage.src = "images/pedrito.png";
 
-const myPedrito = new Component(0, 250, 180, 100, pedritoImage); //PLAYER
-myPedrito.draw(ctx);
+const mypedrito = new Pedrito(0, 250, 180, 100, mypedritoImage); //PLAYER
+mypedrito.draw(ctx);
 
 const obstacleClickerImage = new Image();
 obstacleClickerImage.src = "images/clicker.png";
@@ -96,7 +149,7 @@ const myGameArea = { //this is the object myGameArea. It has properties related 
     canvas: document.getElementById("canvas"), // Canvas property
     frames: 0,
     start: function () {
-        this.interval = setInterval(updateGameArea, 15);
+        this.interval = setInterval(updateGameArea, 2);
     },
     clear: function () {
       ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
