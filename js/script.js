@@ -55,13 +55,13 @@ function updateObstacles() {
 //--------Event Listeners-------
 document.addEventListener("keydown", (event) => {
     console.log(event.key);
-    if (event.key === "ArrowLeft") {
+    if (event.key === "ArrowLeft" && myPedrito.x > 0) {
       myPedrito.x -= 10; // moves Pedrito 10 pixels left
-    } else if (event.key === "ArrowRight") {
+    } else if (event.key === "ArrowRight" && myPedrito.x < 550) {
       myPedrito.x += 10; // moves Pedrito 10 pixels right
-    } else if (event.key === "ArrowUp") {
+    } else if (event.key === "ArrowUp" && myPedrito.y > 0 ) {
         myPedrito.y -= 10; // moves Pedrito 10 pixels up
-    } else if (event.key === "ArrowDown") {
+    } else if (event.key === "ArrowDown" && myPedrito.y < 400 ) {
         myPedrito.y += 10; // moves Pedrito 10 pixels down
     } else if (event.key === "z") {
       myGameArea.stop(); //stops the game loop when "Z" is pressed - right now it's functioning as "stop", I would like it to "pause".
