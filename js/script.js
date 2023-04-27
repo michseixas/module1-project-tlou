@@ -1,5 +1,10 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d"); //get context is a method of the canvas object that returns a ctx object
+ctx.fillStyle = "white";
+ctx.font = "20px Helvetica";
+ctx.textAlign = "left";
+ctx.textBaseline = "top";
+ctx.fillText("Pambazos Eaten:", 600, 100);
 
 // -------My Classes----------------
 class Component {
@@ -98,7 +103,7 @@ const obstaclePambazo = new Image ();
 obstaclePambazo.src = "../images/Pambazo.png";
 
 const myObstacles = []; //array to store all obstacles
-
+var PambazosCaught = 0;
 
 const myGameArea = { //this is the object myGameArea. It has properties related to it. 
     canvas: document.getElementById("canvas"), // Canvas property
