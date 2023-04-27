@@ -112,6 +112,7 @@ function updateGameArea() {
     mypedrito.update();
     // console.log("mypedrito:", mypedrito);
     updateObstacles();
+    myGameArea.score();
 }
 
 function startGame(){
@@ -201,13 +202,20 @@ const myGameArea = { //this is the object myGameArea. It has properties related 
     canvas: document.getElementById("canvas"), // Canvas property
     frames: 0,
     start: function () {
-        this.interval = setInterval(updateGameArea, 2);
+        this.interval = setInterval(updateGameArea, 3);
     },
     clear: function () {
       ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     },
     stop: function () { //stops the game loop by clearing the interval that was set with setInterval
       clearInterval(this.interval);
+    },
+    score: function () {
+      // we are using the myGameArea.frame variable to set a score. It's divided by 5, meaning for every 5 frames, score +1
+      const points = Math.floor(this.frames / 5);
+      this.context.font = '18px serif';
+      this.context.fillStyle = 'white';
+      this.context.fillText(`Score: ${points}`, 350, 50);
     },
   }; 
 
