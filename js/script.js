@@ -200,7 +200,7 @@ const obstacleClickerImage = new Image();
 obstacleClickerImage.src = "images/clicker.png";
 
 const obstaclePambazo = new Image ();
-obstaclePambazo.src = "../images/Pambazo.png";
+obstaclePambazo.src = "images/Pambazo.png";
 
 const myObstacles = []; //array to store all obstacles
 
