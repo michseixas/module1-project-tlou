@@ -126,7 +126,7 @@ function updateObstacles() {
   }
 
   myGameArea.frames += 1;
-  
+
 
   if (myGameArea.frames % 200 === 0) { //This count will be used to count the score as frames pass
     //when this loop reaches 420 frames, it creates a new object, who has a random y coordinate and pushes the object into the array myObstacles.
@@ -138,35 +138,39 @@ function updateObstacles() {
       // this new component has the x and y we just calculated above
       // and has the image of a clicker
       myObstacles.push(new Component(x, y, 80, 80, obstacleClickerImage));
+      
   } //this x and y are the ones defined in this scope!! :)
   
-
+  if (myGameArea.frames % 200 === 0) { 
+      let x = myGameArea.canvas.width;
+      let y = Math.floor(Math.random() * 200);
+      myObstacles.push(new Component(x, y, 40, 70, obstaclePambazo));
+  }
 }
-
 //--------Event Listeners-------
 document.addEventListener("keydown", (event) => {
   // console.log('command key',event.key);
    switch(true){
     case (event.key === "ArrowLeft" && mypedrito.x > 0):
       console.log("arrowleft")
-      mypedrito.speedX -= 0.5 // moves mypedrito mypedrito.speed pixels left
+      mypedrito.x -= 30 // moves mypedrito mypedrito.speed pixels left
       break;
       case (event.key === "ArrowRight" && mypedrito.x < 550):
       console.log("arrowright")
-      mypedrito.speedX += 0.5 ; // moves mypedrito mypedrito.speed pixels left
+      mypedrito.x += 30; // moves mypedrito mypedrito.speed pixels left
       break;
       case (event.key === "ArrowUp" && mypedrito.y > 0):
       console.log("arrowup")
-      mypedrito.speedY -= 0.5; // moves mypedrito mypedrito.speed pixels left
+      mypedrito.y -= 30; // moves mypedrito mypedrito.speed pixels left
       break;
       case (event.key === "ArrowDown" && mypedrito.y < 400):
       console.log("arrowdown")
-      mypedrito.speedY += 0.5; // moves this this.speed pixels left
+      mypedrito.y += 30; // moves this this.speed pixels left
       break;
       case (event.key === "z"):
       myGameArea.stop(); //stops the game loop when "Z" is pressed - right now it's functioning as "stop", I would like it to "pause".
       break;
-      // case " ": para shoot() 
+      // case " ": para shoot30
    }})
   
    document.addEventListener('keyup', (event) => {
@@ -178,10 +182,11 @@ document.addEventListener("keydown", (event) => {
 
   document.getElementById("start-button").onclick = () => { //this is what sets the start button and erases the banner once the start button is clicked
     startGame();
-    let bannerelements = document.getElementsByClassName("banner")
+    let bannerelements = document.getElementsByClassName("banner");
     console.log(bannerelements);
     bannerelements[0].remove();
-   };
+}
+
 
 
 //-----------General Scope-------------
@@ -194,6 +199,9 @@ mypedrito.draw(ctx);
 
 const obstacleClickerImage = new Image();
 obstacleClickerImage.src = "images/clicker.png";
+
+const obstaclePambazo = new Image ();
+obstaclePambazo.src = "../images/Pambazo.png";
 
 const myObstacles = []; //array to store all obstacles
 
