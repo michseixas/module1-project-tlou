@@ -3,12 +3,13 @@ const ctx = canvas.getContext("2d"); //get context is a method of the canvas obj
 
 // -------My Classes----------------
 class Component {
-    constructor(x, y, w, h, imgElement) {
+    constructor(x, y, w, h, imgElement, type) {
       this.x = x;
       this.y = y;
       this.width = w;
       this.height = h;
       this.imgElement = imgElement;
+      this.type = type;
     
     }
 
@@ -28,59 +29,33 @@ class Pedrito extends Component {
   
    //metodos
   
-   update(){
-    //behavior of mypedrito poner flechas y luego llamar funcion
-    // document.addEventListener("keydown", (event) => {
-    // console.log(event.key);
-    //  switch(event.key){
-    //   case (event.key === "ArrowLeft" && this.x > 0):
-    //     this.speedX -= 1 // moves this this.speed pixels left
-    //     break;
-    //     case (event.key === "ArrowRight" && this.x < 550):
-    //     this.speedX += 1 ; // moves this this.speed pixels left
-    //     break;
-    //     case (event.key === "ArrowUp" && this.y > 0):
-    //     this.speedY -= 1; // moves this this.speed pixels left
-    //     break;
-    //     case (event.key === "ArrowDown" && this.y < 400):
-    //     this.speedY += 1; // moves this this.speed pixels left
-    //     break;
-    //     case (event.key === "z"):
-    //     myGameArea.stop(); //stops the game loop when "Z" is pressed - right now it's functioning as "stop", I would like it to "pause".
-    //     break;
-    //     // case " ": para shoot() 
-    //  }
-    
-    //  document.addEventListener('keyup', (event) => {
-    //   this.speed = 0;
-    //   // this.y = 0;
-    //  });
+   update(){}
 
-
-
-    // if (event.key === "ArrowLeft" && this.x > 0) {
-    //   this.x -= 1; // moves this this.speed pixels left
-    // } else if (event.key === "ArrowRight" && this.x < 550) {
-    //   this.x += 1; // moves this this.speed pixels right
-    // } else if (event.key === "ArrowUp" && this.y > 0 ) {
-    //     this.y -= 1; // moves this this.speed pixels up
-    // } else if (event.key === "ArrowDown" && this.y < 400 ) {
-    //     this.y += 1; // moves Pedrito Pedrito.speed pixels down
-    // } else if (event.key === "z") {
-    //   myGameArea.stop(); //stops the game loop when "Z" is pressed - right now it's functioning as "stop", I would like it to "pause".
-    // } else if (event.key === " ") {
-    //   //else if (event barra de espacio....)
-    //   // if you press key = space then call the function shoot()
-    // }
-}
-
-
-  
 
    newPos(){
     this.x += this.speedX;
     this.y += this.speedY;
   }
+  checkCollision(obstacle){
+    return (    this.x < obstacle.x + obstacle.width &&
+                this.x + this.width > obstacle.x &&
+                this.y < obstacle.y + obstacle.height &&
+                this.height + this.y > obstacle.y)
+}
+collisionObstacles(obstacles){
+  obstacles.forEach(element => {
+    if (this.checkCollision(element)){
+      //console.log("collision ");
+      if (element.type === "clicker"){
+        console.log("collision with clicker")
+      } else if (element.type === "pambazo"){
+        console.log("collision with pambazo")
+      }
+    }
+    
+  });
+  
+}
   
    shoot(){
     //dispara balas
@@ -107,27 +82,19 @@ class Clicker extends Component{
 // -------My Functions----------------
 function updateGameArea() {
     myGameArea.clear();
-    mypedrito.draw(ctx);
+
     mypedrito.newPos();
     mypedrito.update();
-    // console.log("mypedrito:", mypedrito);
-    updateObstacles();
-    myGameArea.score();
-}
+    mypedrito.collisionObstacles(myClickers);
+    mypedrito.collisionObstacles(myPambazos);
+    
+    mypedrito.draw(ctx);
+    updateClickers();
+    updatePambazos();
+    //myGameArea.score();
+    myGameArea.frames += 1;
 
-function startGame(){
-    myGameArea.start();
-}
-
-function updateObstacles() {
-  for (i = 0; i < myObstacles.length; i++) {
-    myObstacles[i].x += -1; //For each obstacle, it updates its position by subtracting 1 from the x coordinate
-    myObstacles[i].draw();
-  }
-
-  myGameArea.frames += 1;
-
-
+//Each 200 spawn a new clicker
   if (myGameArea.frames % 200 === 0) { //This count will be used to count the score as frames pass
     //when this loop reaches 420 frames, it creates a new object, who has a random y coordinate and pushes the object into the array myObstacles.
       // x is the total width of the canvas 
@@ -137,19 +104,51 @@ function updateObstacles() {
       // push a new components into the myObstacles array.
       // this new component has the x and y we just calculated above
       // and has the image of a clicker
-      myObstacles.push(new Component(x, y, 80, 80, obstacleClickerImage));
+      //myObstacles.push(new Component(x, y, 80, 80, obstacleClickerImage));
+      myClickers.push(new Component(x, y, 80, 80, obstacleClickerImage, "clicker"));
       
   } //this x and y are the ones defined in this scope!! :)
   
+  //Each 200 spawn a new pambazo
   if (myGameArea.frames % 200 === 0) { 
       let x = myGameArea.canvas.width;
       let y = Math.floor(Math.random() * 200);
-      myObstacles.push(new Component(x, y, 40, 70, obstaclePambazo));
+      myPambazos.push(new Component(x, y, 80, 80, obstaclePambazo, "pambazo"));
   }
+
+  //Win condition if pedrito has 5 bocatas, win the game (means stop update game area- mirar set interval y hacer clear interval de eso)
+ //lose condition if pedrito touches clicker, game over (stop update game)
 }
+
+function startGame(){
+    myGameArea.start();
+}
+
+// function updateObstacles() {
+//   for (i = 0; i < myObstacles.length; i++) {
+//     myObstacles[i].x += -1; //For each obstacle, it updates its position by subtracting 1 from the x coordinate
+//     myObstacles[i].draw();
+//   }
+// }
+  
+function updateClickers() {
+    for (i = 0; i < myClickers.length; i++) {
+      myClickers[i].x += -1; //For each obstacle, it updates its position by subtracting 1 from the x coordinate
+      myClickers[i].draw();
+    }
+  }
+
+    function updatePambazos() {
+      for (i = 0; i < myPambazos.length; i++) {
+        myPambazos[i].x += -1; //For each obstacle, it updates its position by subtracting 1 from the x coordinate
+        myPambazos[i].draw();
+      }
+    }
+
+
+
 //--------Event Listeners-------
 document.addEventListener("keydown", (event) => {
-  // console.log('command key',event.key);
    switch(true){
     case (event.key === "ArrowLeft" && mypedrito.x > 0):
       console.log("arrowleft")
@@ -174,18 +173,10 @@ document.addEventListener("keydown", (event) => {
    }})
   
    document.addEventListener('keyup', (event) => {
-      // console.log("keyup")
       mypedrito.speedX = 0;
     mypedrito.speedY = 0;
     // this.y = 0;
    });
-
-  document.getElementById("start-button").onclick = () => { //this is what sets the start button and erases the banner once the start button is clicked
-    startGame();
-    let bannerelements = document.getElementsByClassName("banner");
-    console.log(bannerelements);
-    bannerelements[0].remove();
-}
 
 
 
@@ -201,9 +192,11 @@ const obstacleClickerImage = new Image();
 obstacleClickerImage.src = "images/clicker.png";
 
 const obstaclePambazo = new Image ();
-obstaclePambazo.src = "../images/Pambazo.png";
+obstaclePambazo.src = "images/Pambazo.png";
 
-const myObstacles = []; //array to store all obstacles
+//const myObstacles = []; //array to store all obstacles
+const myClickers = []; //array to store all obstacles
+const myPambazos = []; //array to store all obstacles
 
 
 const myGameArea = { //this is the object myGameArea. It has properties related to it. 
@@ -218,14 +211,23 @@ const myGameArea = { //this is the object myGameArea. It has properties related 
     stop: function () { //stops the game loop by clearing the interval that was set with setInterval
       clearInterval(this.interval);
     },
-    score: function () {
-      // we are using the myGameArea.frame variable to set a score. It's divided by 5, meaning for every 5 frames, score +1
-      const points = Math.floor(this.frames / 5);
-      this.context.font = '18px serif';
-      this.context.fillStyle = 'white';
-      this.context.fillText(`Score: ${points}`, 350, 50);
-    },
+    // score: function () {
+    //   // we are using the myGameArea.frame variable to set a score. It's divided by 5, meaning for every 5 frames, score +1
+    //   const points = Math.floor(this.frames / 5);
+    //   this.context.font = '18px serif';
+    //   this.context.fillStyle = 'white';
+    //   this.context.fillText(`Score: ${points}`, 350, 50);
+    // },
   }; 
+
+  
+
+
+  document.getElementById("start-button").onclick = () => { //this is what sets the start button and erases the banner once the start button is clicked
+    startGame();
+    let bannerelements = document.getElementsByClassName("banner");
+    bannerelements[0].remove();
+}
 
 
   
