@@ -148,24 +148,24 @@ document.addEventListener("keydown", (event) => {
    switch(true){
     case (event.key === "ArrowLeft" && mypedrito.x > 0):
       console.log("arrowleft")
-      mypedrito.speedX -= 0.5 // moves mypedrito mypedrito.speed pixels left
+      mypedrito.x -= 30 // moves mypedrito mypedrito.speed pixels left
       break;
       case (event.key === "ArrowRight" && mypedrito.x < 550):
       console.log("arrowright")
-      mypedrito.speedX += 0.5 ; // moves mypedrito mypedrito.speed pixels left
+      mypedrito.x += 30; // moves mypedrito mypedrito.speed pixels left
       break;
       case (event.key === "ArrowUp" && mypedrito.y > 0):
       console.log("arrowup")
-      mypedrito.speedY -= 0.5; // moves mypedrito mypedrito.speed pixels left
+      mypedrito.y -= 30; // moves mypedrito mypedrito.speed pixels left
       break;
       case (event.key === "ArrowDown" && mypedrito.y < 400):
       console.log("arrowdown")
-      mypedrito.speedY += 0.5; // moves this this.speed pixels left
+      mypedrito.y += 30; // moves this this.speed pixels left
       break;
       case (event.key === "z"):
       myGameArea.stop(); //stops the game loop when "Z" is pressed - right now it's functioning as "stop", I would like it to "pause".
       break;
-      // case " ": para shoot() 
+      // case " ": para shoot30
    }})
   
    document.addEventListener('keyup', (event) => {
