@@ -1,51 +1,39 @@
 body {
     padding: 0;
     text-align: center;
+    background-color: #010302;
   }
 .instructions {
-  font-family: "Arial";
-  color:green;
+  font-family: "Impact";
 }
 .instructions_pambazos {
-  font-family: "Arial";
-  color:darkblue;
+  font-family: "Impact";
 }
 .instructions_result {
-  font-family: "Arial";
-  color:darkred
+  font-family: "Impact";
 }
   .game-intro {
     float: left;
-    padding: 3% 5%;
+    padding: 10% 2%;
   }
   
   .game-intro p {
-    font-size: 18px;
-    font-family: "Arial"
+    font-size: 25px;
+    font-family: "Impact";
+    color: white;
+    letter-spacing: 3px;
   }
   
   .logo-img {
-    width: 100px;
-    padding-bottom: 15%;
+    width: 550px;
+    padding: 0;
+    margin: 0;
   }
   
   .arrows-img {
     width: 150px;
   }
-  body button {
-    font-size: 30px;
-    background-color: #1b2427;
-    color: #fff;
-    padding: 20px 40px;
-    border: 0;
-    box-shadow: 0;
-    border-radius: 5px;
-    margin-bottom: 20px;
-    position: absolute;
-    right: 100px;
-    top: 258px;
-  
-  }
+
   
   #game-board {
     float: left;
@@ -53,7 +41,7 @@ body {
   }
   
   canvas {
-    border: 1px solid ; 
+    border: none ; 
     position: absolute;
   }
   
@@ -66,15 +54,81 @@ body {
     background-size: cover;
     z-index:-1;
   } 
-
-.banner {
+  
+  .banner {
+    position: fixed;
+    top: 0px;
+    left:0px;
+    z-index: 2;
+    width:100vw;
+    height:100vh;
+    background-image: url(../images/tlou-banner.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  
+/* .win {
   position: fixed;
   top: 0px;
   left:0px;
-  z-index: 2;
+  z-index: 3;
   width:100vw;
   height:100vh;
-  background-image: url(../images/tlou-banner.jpeg);
+  background-image: url(../images/pedrioGana.gif);
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+.game-over {
+  position: fixed;
+  top: 0px;
+  left:0px;
+  z-index: 4;
+  width:100vw;
+  height:100vh;
+  background-image: url(../images/pedritoPierde.gif);
+  background-repeat: no-repeat;
+  background-size: cover;
+} */
+
+.banner button {
+  font-size: 30px;
+  background-color: #1b2427;
+  color: #fff;
+  padding: 20px 40px;
+  border: 0;
+  box-shadow: 0;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  position: absolute;
+  right: 100px;
+  top: 258px;
+}
+/* 
+.win button {
+  font-size: 30px;
+  background-color: #1b2427;
+  color: #fff;
+  padding: 20px 40px;
+  border: 0;
+  box-shadow: 0;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  position: absolute;
+  right: 100px;
+  top: 258px;
+}
+
+.game-over button {
+  font-size: 30px;
+  background-color: #1b2427;
+  color: #fff;
+  padding: 20px 40px;
+  border: 0;
+  box-shadow: 0;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  position: absolute;
+  right: 100px;
+  top: 258px;
+} */
