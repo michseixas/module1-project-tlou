@@ -2,6 +2,7 @@ body {
     padding: 0;
     text-align: center;
     background-color: #010302;
+    
   }
 .instructions {
   font-family: "Impact";
@@ -46,20 +47,20 @@ body {
   }
   
   #canvas { /* Main reloadable Canvas*/
-    z-index: 1; 
+    z-index: 3; 
   } 
   
   #canvasBackground {/* Background Canvas*/
     background-image: url(../images/forest.jpeg);
     background-size: cover;
-    z-index:-1;
+    z-index: 2;
   } 
   
   .banner {
     position: fixed;
     top: 0px;
     left:0px;
-    z-index: 2;
+    z-index: 4;
     width:100vw;
     height:100vh;
     background-image: url(../images/tlou-banner.jpeg);
@@ -67,11 +68,11 @@ body {
     background-size: cover;
   }
   
-/* .win {
+.win {
   position: fixed;
   top: 0px;
   left:0px;
-  z-index: 3;
+  z-index: -2;
   width:100vw;
   height:100vh;
   background-image: url(../images/pedrioGana.gif);
@@ -83,13 +84,13 @@ body {
   position: fixed;
   top: 0px;
   left:0px;
-  z-index: 4;
+  z-index: -1;
   width:100vw;
   height:100vh;
   background-image: url(../images/pedritoPierde.gif);
   background-repeat: no-repeat;
   background-size: cover;
-} */
+}
 
 .banner button {
   font-size: 30px;
@@ -103,8 +104,9 @@ body {
   position: absolute;
   right: 100px;
   top: 258px;
+  z-index: 4;
 }
-/* 
+
 .win button {
   font-size: 30px;
   background-color: #1b2427;
@@ -117,6 +119,7 @@ body {
   position: absolute;
   right: 100px;
   top: 258px;
+  z-index: 1;
 }
 
 .game-over button {
@@ -131,4 +134,5 @@ body {
   position: absolute;
   right: 100px;
   top: 258px;
-} */
+  z-index: 2;
+}

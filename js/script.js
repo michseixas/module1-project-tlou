@@ -1,4 +1,6 @@
 const canvas = document.getElementById("canvas");
+const canvasBackground = document.getElementById("canvasBackground");
+const canvasText = document.getElementById("texto-canvas");
 const ctx = canvas.getContext("2d"); //get context is a method of the canvas object that returns a ctx object
 
 // -------My Classes----------------
@@ -120,7 +122,15 @@ function startGame() {
 }
 
 function winGame() {
+  // ctx.clearRect(0, 0, canvas.width, canvas.height);
   myGameArea.stop();
+  canvas.remove();
+  canvasBackground.remove();
+  canvasText.remove();
+  const bannerWin = document.createElement("img");
+  bannerWin.setAttribute("class", 'win');
+  const winConditionElement = document.getElementById("win-condition");
+  winConditionElement.appendChild(bannerWin);
   ctx.font = "bold 40px impact";
   ctx.fillStyle = "white";
   ctx.fillText(
@@ -241,3 +251,15 @@ document.getElementById("start-button").onclick = () => {
   let bannerelements = document.getElementsByClassName("banner");
   bannerelements[0].remove();
 };
+
+// document.getElementById("try-again").onclick = () => {
+//   startGame();
+//   let bannerElements2 = document.getElementsByClassName("game-over");
+//   bannerElements2[0].remove();
+// };
+
+// document.getElementById("next-level").onclick = () => {
+//   startGame();
+//   let bannerElements3 = document.getElementsByClassName("win");
+//   bannerElements3[0].remove();
+// }
