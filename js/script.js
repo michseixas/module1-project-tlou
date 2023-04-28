@@ -29,6 +29,7 @@ class Pedrito extends Component {
     super(x, y, w, h, imgElement);
     this.speedX = 0;
     this.speedY = 0;
+    this.pambazoCount = 0;
   }
   
    //metodos
@@ -51,9 +52,13 @@ collisionObstacles(obstacles){
     if (this.checkCollision(element)){
       //console.log("collision ");
       if (element.type === "clicker"){
+        this.gameOver();
         console.log("collision with clicker")
       } else if (element.type === "pambazo"){
-        console.log("collision with pambazo")
+        console.log("collision with pambazo");
+        this.pambazoCount++; 
+        if (this.pambazoCount = 5){
+        this.winGame()} else {this.pambazoCount++};
       }
     }
     
@@ -61,16 +66,24 @@ collisionObstacles(obstacles){
   
 }
   
-   shoot(){
-    //dispara balas
-  }
-  collectBocatas() {
-    //
-  }
+gameOver(){
+  myGameArea.stop();
+  ctx.font = "bold 40px impact";
+  ctx.fillStyle = "white";
+  ctx.fillText ("Oops!!", 350, 160);
+  ctx.fillText ("Looks like you've been", 200, 210);
+  ctx.fillText ("touched by a Clicker!", 220, 260);
+  ctx.font = "bold 70px impact";
+  ctx.fillText ("GAME OVER", 280, 350);
+}
 
-  mypedritoDies() {
-    //puede que vaya dentro de update
-  }
+winGame(){
+  myGameArea.stop();
+  ctx.font = "bold 40px impact";
+  ctx.fillStyle = "white";
+  ctx.fillText ("Congrats, you ate all the Pambazos and are now invincible", 50, 250);
+  
+}
 }
 
 class Clicker extends Component {
@@ -100,7 +113,7 @@ function updateGameArea() {
       // x is the total width of the canvas 
       let x = myGameArea.canvas.width;
       // y is a random number between 0 and 420
-      let y = Math.floor(Math.random() * 420);
+      let y = Math.floor(Math.random() * 720);
       // push a new components into the myObstacles array.
       // this new component has the x and y we just calculated above
       // and has the image of a clicker
@@ -113,7 +126,7 @@ function updateGameArea() {
   if (myGameArea.frames % 200 === 0) { 
       let x = myGameArea.canvas.width;
       let y = Math.floor(Math.random() * 200);
-      myPambazos.push(new Component(x, y, 80, 80, obstaclePambazo, "pambazo"));
+      myPambazos.push(new Component(x, y, 40, 40, obstaclePambazo, "pambazo"));
   }
 
   //Win condition if pedrito has 5 bocatas, win the game (means stop update game area- mirar set interval y hacer clear interval de eso)
@@ -154,7 +167,7 @@ document.addEventListener("keydown", (event) => {
       console.log("arrowleft")
       mypedrito.x -= 30 // moves mypedrito mypedrito.speed pixels left
       break;
-    case event.key === "ArrowRight" && mypedrito.x < 550:
+    case event.key === "ArrowRight" && mypedrito.x < 750:
       console.log("arrowright");
       mypedrito.x += 30; // moves mypedrito mypedrito.speed pixels left
       break;
@@ -162,7 +175,7 @@ document.addEventListener("keydown", (event) => {
       console.log("arrowup");
       mypedrito.y -= 30; // moves mypedrito mypedrito.speed pixels left
       break;
-    case event.key === "ArrowDown" && mypedrito.y < 400:
+    case event.key === "ArrowDown" && mypedrito.y < 600:
       console.log("arrowdown");
       mypedrito.y += 30; // moves this this.speed pixels left
       break;
@@ -185,7 +198,7 @@ document.addEventListener("keydown", (event) => {
 const mypedritoImage = new Image();
 mypedritoImage.src = "images/pedrito.png";
 
-const mypedrito = new Pedrito(0, 250, 180, 100, mypedritoImage); //PLAYER
+const mypedrito = new Pedrito(0, 250, 120, 100, mypedritoImage); //PLAYER
 mypedrito.draw(ctx);
 
 const obstacleClickerImage = new Image();
