@@ -146,8 +146,12 @@ function winGame(){
   const bannerWin = document.createElement("img");
   bannerWin.src = "images/pedrioGana.gif";
   bannerWin.setAttribute("class", 'win-condition');
+  const textYouWin = document.createElement("img");
+  textYouWin.src = "images/youwinpink.001.png";
+  textYouWin.setAttribute("class", 'win-condition');
   const winConditionElement = document.getElementById("win-condition");
   winConditionElement.appendChild(bannerWin);
+  winConditionElement.appendChild(textYouWin);
 }
 
 function gameOver(){
@@ -159,8 +163,12 @@ function gameOver(){
   const bannerGameOver = document.createElement("img");
   bannerGameOver.src = "images/pedritoPierde.gif";
   bannerGameOver.setAttribute("class", 'win-condition');
+  const textGameOver = document.createElement("img");
+  textGameOver.src = "images/gameovertext.png";
+  textGameOver.setAttribute("class",'win-condition')
   const gOverConditionElement = document.getElementById("gameOver-condition");
   gOverConditionElement.appendChild(bannerGameOver);
+  gOverConditionElement.appendChild(textGameOver)
 }
 
 // function updateObstacles() {
