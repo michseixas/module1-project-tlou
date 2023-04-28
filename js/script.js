@@ -1,4 +1,6 @@
 const canvas = document.getElementById("canvas");
+const canvasBackground = document.getElementById("canvasBackground");
+const canvasText = document.getElementById("texto-canvas");
 const ctx = canvas.getContext("2d"); //get context is a method of the canvas object that returns a ctx object
 
 // -------My Classes----------------
@@ -33,55 +35,37 @@ class Pedrito extends Component {
     this.x += this.speedX;
     this.y += this.speedY;
   }
-
-  checkCollision(obstacle){
-    return (this.x < obstacle.x + obstacle.width &&
-            this.x + this.width -40 > obstacle.x &&
-            this.y < obstacle.y + obstacle.height &&
-            this.height + this.y > obstacle.y)
+  checkCollision(obstacle) {
+    return (
+      this.x < obstacle.x + obstacle.width &&
+      this.x + this.width - 40 > obstacle.x &&
+      this.y < obstacle.y + obstacle.height &&
+      this.height + this.y > obstacle.y
+    );
   }
-  collisionObstacles(obstacles){
-  //do a for instead a for each so we an remove elements with splice
-  for (let i = obstacles.length - 1; i >= 0 ; i--) {
-    let element = obstacles[i];
-    if (this.checkCollision(element)){
-      console.log("collision ");
-      if (element.type === "clicker"){
-        console.log("collision with clicker");
-        //myClickers.splice(i,1); // remove touched clicker from the screen using index
-        this.gameOver(); 
-      } else if (element.type === "pambazo"){
-        console.log("collision with pambazo");
-        myPambazos.splice(i,1); // remove touched pambazo from the screen using index
-        this.points++;
-        if (this.points >= 5){
-          console.log("entro en win game points > 5")
-          this.winGame();
+  collisionObstacles(obstacles) {
+    //do a for instead a for each so we an remove elements with splice
+    for (let i = obstacles.length - 1; i >= 0; i--) {
+      let element = obstacles[i];
+      if (this.checkCollision(element)) {
+        console.log("collision ");
+        if (element.type === "clicker") {
+          console.log("collision with clicker");
+          //myClickers.splice(i,1); // remove touched clicker from the screen using index
+          gameOver();
+        } else if (element.type === "pambazo") {
+          console.log("collision with pambazo");
+          myPambazos.splice(i, 1); // remove touched pambazo from the screen using index
+          this.points++;
+          if (this.points >= 5) {
+            console.log("entro en win game points > 5");
+            winGame();
+          }
         }
       }
-    } 
-  };
-  
+    }
   }
-  
-  gameOver(){
-    myGameArea.stop();
-    ctx.font = "bold 40px impact";
-    ctx.fillStyle = "white";
-    ctx.fillText ("Oops!!", 350, 160);
-    ctx.fillText ("Looks like you've been", 200, 210);
-    ctx.fillText ("touched by a Clicker!", 220, 260);
-    ctx.font = "bold 70px impact";
-    ctx.fillText ("GAME OVER", 280, 350);
-  }
-
-  winGame(){
-    myGameArea.stop();
-    ctx.font = "bold 40px impact";
-    ctx.fillStyle = "white";
-    ctx.fillText ("Congrats, you ate all the Pambazos and are now invincible", 50, 250);
-  }
-  }
+}
 
 class Clicker extends Component {
   update() {
@@ -90,21 +74,22 @@ class Clicker extends Component {
 
 // -------My Functions----------------
 function updateGameArea() {
-    myGameArea.clear();
+  console.log("update game area");
+  myGameArea.clear();
 
-    mypedrito.newPos();
-    mypedrito.update();
-    mypedrito.collisionObstacles(myClickers);
-    mypedrito.collisionObstacles(myPambazos);
-    
-    mypedrito.draw(ctx);
-    updateClickers();
-    updatePambazos();
-    //myGameArea.score();
-    myGameArea.frames += 1;
+  mypedrito.newPos();
+  mypedrito.update();
+  mypedrito.collisionObstacles(myClickers);
+  mypedrito.collisionObstacles(myPambazos);
+
+  mypedrito.draw(ctx);
+  updateClickers();
+  updatePambazos();
+
+  myGameArea.frames += 1;
 
 //Each 200 spawn a new clicker
-  if (myGameArea.frames % 150 === 0) { //This count will be used to count the score as frames pass
+  if (myGameArea.frames % 20 === 0) { //This count will be used to count the score as frames pass
     //when this loop reaches 420 frames, it creates a new object, who has a random y coordinate and pushes the object into the array myObstacles.
       // x is the total width of the canvas 
       let x = myGameArea.canvas.width;
@@ -118,36 +103,58 @@ function updateGameArea() {
   } //this x and y are the ones defined in this scope!! :)
   
   //Each 1300 spawn a new pambazo (same as above, but for pambazos)
-  if (myGameArea.frames % 1300 === 0) { 
+  if (myGameArea.frames % 70 === 0) { 
       let x = myGameArea.canvas.width;
       let y = Math.floor(Math.random() * 200);
       myPambazos.push(new Component(x, y, 30, 30, obstaclePambazo, "pambazo"));
   }
+  
 }
 
-
-function startGame(){
-    myGameArea.start();
+function startGame() {
+  myGameArea.start();
 }
 
-function winGame(){
+function winGame() {
+  // ctx.clearRect(0, 0, canvas.width, canvas.height);
   myGameArea.stop();
- }
+  canvas.remove();
+  canvasBackground.remove();
+  canvasText.remove();
+  const bannerWin = document.createElement("img");
+  bannerWin.setAttribute("class", 'win');
+  const winConditionElement = document.getElementById("win-condition");
+  winConditionElement.appendChild(bannerWin);
+  ctx.font = "bold 40px impact";
+  ctx.fillStyle = "white";
+  ctx.fillText(
+    "Congrats, you ate all the Pambazos and are now invincible",
+    50,
+    250
+  );
+}
 
-function gameOver(){
+function gameOver() {
   myGameArea.stop();
+  ctx.font = "bold 40px impact";
+  ctx.fillStyle = "white";
+  ctx.fillText("Oops!!", 350, 160);
+  ctx.fillText("Looks like you've been", 200, 210);
+  ctx.fillText("touched by a Clicker!", 220, 260);
+  ctx.font = "bold 70px impact";
+  ctx.fillText("GAME OVER", 280, 350);
 }
 
 function updateClickers() {
   for (i = 0; i < myClickers.length; i++) {
-    myClickers[i].x += -1; //For each obstacle, it updates its position by subtracting 1 from the x coordinate
+    myClickers[i].x += -10; //For each obstacle, it updates its position by subtracting 1 from the x coordinate
     myClickers[i].draw();
     }
   }
 
 function updatePambazos() {
   for (i = 0; i < myPambazos.length; i++) {
-    myPambazos[i].x += -1; //For each obstacle, it updates its position by subtracting 1 from the x coordinate
+    myPambazos[i].x += -15; //For each obstacle, it updates its position by subtracting 1 from the x coordinate
     myPambazos[i].draw();
     }
   }
@@ -176,16 +183,15 @@ document.addEventListener("keydown", (event) => {
     case event.key === "z":
       myGameArea.stop(); //stops the game loop when "Z" is pressed - right now it's functioning as "stop", I would like it to "pause".
       break;
-      // case " ": para shoot30
-   }})
-  
-   document.addEventListener('keyup', (event) => {
-      mypedrito.speedX = 0;
-    mypedrito.speedY = 0;
-    // this.y = 0;
-   });
+    // case " ": para shoot30
+  }
+});
 
-
+document.addEventListener("keyup", (event) => {
+  mypedrito.speedX = 0;
+  mypedrito.speedY = 0;
+  // this.y = 0;
+});
 
 //-----------General Scope-------------
 
@@ -205,33 +211,44 @@ obstaclePambazo.src = "images/Pambazo.png";
 const myClickers = []; //array to store all clickers
 const myPambazos = []; //array to store all pambazos
 
+const myGameArea = {
+  //this is the object myGameArea. It has properties related to it.
+  canvas: document.getElementById("canvas"), // Canvas property
+  frames: 0,
+  start: function () {
+    this.interval = setInterval(updateGameArea, 40);
+  },
+  clear: function () {
+    ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  },
+  stop: function () {
+    //stops the game loop by clearing the interval that was set with setInterval
+    clearInterval(this.interval);
+  },
+  // score: function () {
+  //   // we are using the myGameArea.frame variable to set a score. It's divided by 5, meaning for every 5 frames, score +1
+  //   const points = Math.floor(this.frames / 5);
+  //   this.context.font = '18px serif';
+  //   this.context.fillStyle = 'white';
+  //   this.context.fillText(`Score: ${points}`, 350, 50);
+  // },
+};
 
-const myGameArea = { //this is the object myGameArea. It has properties related to it. 
-    canvas: document.getElementById("canvas"), // Canvas property
-    frames: 0,
-    start: function () { //starts the loop
-        this.interval = setInterval(updateGameArea, 3);
-    },
-    clear: function () { //clears the screen
-      ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    },
-    stop: function () { //stops the game loop by clearing the interval that was set with setInterval
-      clearInterval(this.interval);
-    },
-    // score: function () {
-    //   // we are using the myGameArea.frame variable to set a score. It's divided by 5, meaning for every 5 frames, score +1
-    //   const points = Math.floor(this.frames / 5);
-    //   this.context.font = '18px serif';
-    //   this.context.fillStyle = 'white';
-    //   this.context.fillText(`Score: ${points}`, 350, 50);
-    // },
-  }; 
+document.getElementById("start-button").onclick = () => {
+  //this is what sets the start button and erases the banner once the start button is clicked
+  startGame();
+  let bannerelements = document.getElementsByClassName("banner");
+  bannerelements[0].remove();
+};
 
-  document.getElementById("start-button").onclick = () => { //this is what sets the start button and erases the banner once the start button is clicked
-    startGame();
-    let bannerelements = document.getElementsByClassName("banner");
-    bannerelements[0].remove();
-}
+// document.getElementById("try-again").onclick = () => {
+//   startGame();
+//   let bannerElements2 = document.getElementsByClassName("game-over");
+//   bannerElements2[0].remove();
+// };
 
-
-  
+// document.getElementById("next-level").onclick = () => {
+//   startGame();
+//   let bannerElements3 = document.getElementsByClassName("win");
+//   bannerElements3[0].remove();
+// }
