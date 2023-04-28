@@ -56,14 +56,14 @@ collisionObstacles(obstacles){
       if (element.type === "clicker"){
         console.log("collision with clicker");
         //myClickers.splice(i,1); // remove touched clicker from the screen using index
-        gameOver(); 
+        this.gameOver(); 
       } else if (element.type === "pambazo"){
         console.log("collision with pambazo");
         myPambazos.splice(i,1); // remove touched pambazo from the screen using index
         this.points++;
         if (this.points >= 5){
           console.log("entro en win game points > 5")
-          winGame();
+          this.winGame();
         }
       }
     } 
