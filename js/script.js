@@ -77,12 +77,11 @@ class Clicker extends Component {
 // -------My Functions----------------
 function updateGameArea() {
   myGameArea.clear();
-
   mypedrito.newPos();
   mypedrito.update();
   mypedrito.collisionObstacles(myClickers);
   mypedrito.collisionObstacles(myPambazos);
-
+  
   mypedrito.draw(ctx);
   updateClickers();
   updatePambazos();
@@ -128,27 +127,22 @@ function winGame() {
   canvasBackground.remove();
   canvasText.remove();
   const bannerWin = document.createElement("img");
-  bannerWin.setAttribute("class", 'win');
+  bannerWin.src = "images/pedrioGana.gif";
+  bannerWin.setAttribute("class", 'win-condition');
   const winConditionElement = document.getElementById("win-condition");
   winConditionElement.appendChild(bannerWin);
-  ctx.font = "bold 40px impact";
-  ctx.fillStyle = "white";
-  ctx.fillText(
-    "Congrats, you ate all the Pambazos and are now invincible",
-    50,
-    250
-  );
 }
 
 function gameOver() {
   myGameArea.stop();
-  ctx.font = "bold 40px impact";
-  ctx.fillStyle = "white";
-  ctx.fillText("Oops!!", 350, 160);
-  ctx.fillText("Looks like you've been", 200, 210);
-  ctx.fillText("touched by a Clicker!", 220, 260);
-  ctx.font = "bold 70px impact";
-  ctx.fillText("GAME OVER", 280, 350);
+  canvas.remove();
+  canvasBackground.remove();
+  canvasText.remove();
+  const bannerGameOver = document.createElement("img");
+  bannerGameOver.src = "images/pedritoPierde.gif";
+  bannerGameOver.setAttribute("class", 'win-condition');
+  const gOverConditionElement = document.getElementById("gameOver-condition");
+  gOverConditionElement.appendChild(bannerGameOver);
 }
 
 // function updateObstacles() {
@@ -236,13 +230,6 @@ const myGameArea = {
     //stops the game loop by clearing the interval that was set with setInterval
     clearInterval(this.interval);
   },
-  // score: function () {
-  //   // we are using the myGameArea.frame variable to set a score. It's divided by 5, meaning for every 5 frames, score +1
-  //   const points = Math.floor(this.frames / 5);
-  //   this.context.font = '18px serif';
-  //   this.context.fillStyle = 'white';
-  //   this.context.fillText(`Score: ${points}`, 350, 50);
-  // },
 };
 
 document.getElementById("start-button").onclick = () => {
@@ -258,8 +245,8 @@ document.getElementById("start-button").onclick = () => {
 //   bannerElements2[0].remove();
 // };
 
-// document.getElementById("next-level").onclick = () => {
-//   startGame();
-//   let bannerElements3 = document.getElementsByClassName("win");
-//   bannerElements3[0].remove();
-// }
+document.getElementById("next-level").onclick = () => {
+  startGame();
+  let bannerElements3 = document.getElementsByClassName("win");
+  bannerElements3[0].remove();
+}
