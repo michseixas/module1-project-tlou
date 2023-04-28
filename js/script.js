@@ -39,7 +39,7 @@ class Pedrito extends Component {
   }
   checkCollision(obstacle){
     return (    this.x < obstacle.x + obstacle.width &&
-                this.x + this.width -25 > obstacle.x &&
+                this.x + this.width -40 > obstacle.x &&
                 this.y < obstacle.y + obstacle.height &&
                 this.height + this.y > obstacle.y)
 }
