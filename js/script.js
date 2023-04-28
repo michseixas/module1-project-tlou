@@ -247,11 +247,11 @@ const myPambazos = []; //array to store all pambazos
 
 //Adding audios
 
-var bannerMusic = new Audio('../audio/thelastofusback.mp3');
-var eatingPambazos = new Audio('../audio/eatingpambazos.wav');
-var eatingClickers = new Audio('../audio/eatingclickers.wav');
-var victory = new Audio('../audio/victory.wav');
-var lose = new Audio('../audio/lose.wav');
+var bannerMusic = new Audio('audio/thelastofusback.mp3');
+var eatingPambazos = new Audio('audio/eatingpambazos.wav');
+var eatingClickers = new Audio('audio/eatingclickers.wav');
+var victory = new Audio('audio/victory.wav');
+var lose = new Audio('audio/lose.wav');
 
 
 const myGameArea = { //this is the object myGameArea. It has properties related to it. 
