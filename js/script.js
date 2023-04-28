@@ -29,7 +29,7 @@ class Pedrito extends Component {
     super(x, y, w, h, imgElement);
     this.speedX = 0;
     this.speedY = 0;
-    this.pambazoCount = 0;
+    this.points = 0;
   }
   
    //metodos
@@ -43,26 +43,31 @@ class Pedrito extends Component {
   }
   checkCollision(obstacle){
     return (    this.x < obstacle.x + obstacle.width &&
-                this.x + this.width > obstacle.x &&
+                this.x + this.width -40 > obstacle.x &&
                 this.y < obstacle.y + obstacle.height &&
                 this.height + this.y > obstacle.y)
 }
 collisionObstacles(obstacles){
-  obstacles.forEach(element => {
+  //do a for instead a for each so we an remove elements with splice
+  for (let i = obstacles.length - 1; i >= 0 ; i--) {
+    let element = obstacles[i];
     if (this.checkCollision(element)){
-      //console.log("collision ");
+      console.log("collision ");
       if (element.type === "clicker"){
-        this.gameOver();
-        console.log("collision with clicker")
+        console.log("collision with clicker");
+        //myClickers.splice(i,1); // remove touched clicker from the screen using index
+        gameOver(); 
       } else if (element.type === "pambazo"){
         console.log("collision with pambazo");
-        this.pambazoCount++; 
-        if (this.pambazoCount = 5){
-        this.winGame()} else {this.pambazoCount++};
+        myPambazos.splice(i,1); // remove touched pambazo from the screen using index
+        this.points++;
+        if (this.points >= 5){
+          console.log("entro en win game points > 5")
+          winGame();
+        }
       }
-    }
-    
-  });
+    } 
+  };
   
 }
   
@@ -126,15 +131,24 @@ function updateGameArea() {
   if (myGameArea.frames % 200 === 0) { 
       let x = myGameArea.canvas.width;
       let y = Math.floor(Math.random() * 200);
-      myPambazos.push(new Component(x, y, 40, 40, obstaclePambazo, "pambazo"));
+      myPambazos.push(new Component(x, y, 50, 50, obstaclePambazo, "pambazo"));
   }
 
   //Win condition if pedrito has 5 bocatas, win the game (means stop update game area- mirar set interval y hacer clear interval de eso)
  //lose condition if pedrito touches clicker, game over (stop update game)
 }
 
+
 function startGame(){
     myGameArea.start();
+}
+
+function winGame(){
+  myGameArea.stop();
+ }
+
+function gameOver(){
+  myGameArea.stop();
 }
 
 // function updateObstacles() {
@@ -198,7 +212,7 @@ document.addEventListener("keydown", (event) => {
 const mypedritoImage = new Image();
 mypedritoImage.src = "images/pedrito.png";
 
-const mypedrito = new Pedrito(0, 250, 120, 100, mypedritoImage); //PLAYER
+const mypedrito = new Pedrito(0, 250, 90, 70, mypedritoImage); //PLAYER
 mypedrito.draw(ctx);
 
 const obstacleClickerImage = new Image();
