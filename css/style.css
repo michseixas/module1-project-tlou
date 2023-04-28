@@ -68,26 +68,26 @@ body {
     background-size: cover;
   }
   
-.win {
+.win-condition {
   position: fixed;
   top: 0px;
   left:0px;
   z-index: -2;
   width:100vw;
   height:100vh;
-  background-image: url(../images/pedrioGana.gif);
+  /* background-image: url(../images/pedrioGana.gif); */
   background-repeat: no-repeat;
   background-size: cover;
 }
 
-.game-over {
+.gameOver-condition {
   position: fixed;
   top: 0px;
   left:0px;
-  z-index: -1;
+  z-index: -10;
   width:100vw;
   height:100vh;
-  background-image: url(../images/pedritoPierde.gif);
+  /* background-image: url(../images/pedritoPierde.gif); */
   background-repeat: no-repeat;
   background-size: cover;
 }
@@ -107,7 +107,7 @@ body {
   z-index: 4;
 }
 
-.win button {
+.win-condition button {
   font-size: 30px;
   background-color: #1b2427;
   color: #fff;
@@ -119,10 +119,10 @@ body {
   position: absolute;
   right: 100px;
   top: 258px;
-  z-index: 1;
+  z-index: -10;
 }
 
-.game-over button {
+.gameOver-condition button {
   font-size: 30px;
   background-color: #1b2427;
   color: #fff;
@@ -134,5 +134,5 @@ body {
   position: absolute;
   right: 100px;
   top: 258px;
-  z-index: 2;
+  z-index: 5;
 }

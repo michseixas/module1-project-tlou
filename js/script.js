@@ -79,12 +79,11 @@ class Clicker extends Component {
 function updateGameArea() {
   console.log("update game area");
   myGameArea.clear();
-
   mypedrito.newPos();
   mypedrito.update();
   mypedrito.collisionObstacles(myClickers);
   mypedrito.collisionObstacles(myPambazos);
-
+  
   mypedrito.draw(ctx);
   updateClickers();
   updatePambazos();
@@ -145,30 +144,24 @@ function winGame(){
   canvasBackground.remove();
   canvasText.remove();
   const bannerWin = document.createElement("img");
-  bannerWin.setAttribute("class", 'win');
+  bannerWin.src = "images/pedrioGana.gif";
+  bannerWin.setAttribute("class", 'win-condition');
   const winConditionElement = document.getElementById("win-condition");
   winConditionElement.appendChild(bannerWin);
-  ctx.font = "bold 40px impact";
-  ctx.fillStyle = "white";
-  ctx.fillText(
-    "Congrats, you ate all the Pambazos and are now invincible",
-    50,
-    250
-  );
-  }
+}
 
 function gameOver(){
   endAudio ();
   myGameArea.stop();
-  
-  ctx.font = "bold 40px impact";
-  ctx.fillStyle = "white";
-  ctx.fillText("Oops!!", 350, 160);
-  ctx.fillText("Looks like you've been", 200, 210);
-  ctx.fillText("touched by a Clicker!", 220, 260);
-  ctx.font = "bold 70px impact";
-  ctx.fillText("GAME OVER", 280, 350);
-  }
+  canvas.remove();
+  canvasBackground.remove();
+  canvasText.remove();
+  const bannerGameOver = document.createElement("img");
+  bannerGameOver.src = "images/pedritoPierde.gif";
+  bannerGameOver.setAttribute("class", 'win-condition');
+  const gOverConditionElement = document.getElementById("gameOver-condition");
+  gOverConditionElement.appendChild(bannerGameOver);
+}
 
 // function updateObstacles() {
 //   for (i = 0; i < myObstacles.length; i++) {
